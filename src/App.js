@@ -1,14 +1,19 @@
-import React from 'react';
+import React from 'react'
+import { HashRouter } from 'react-router-dom'
+import { renderRoutes } from 'react-router-config'
 import { GlobalStyle } from './style'
 import { IconStyle } from './assets/iconfont/iconfont'
+import routes from './routes/index'
 
 function App() {
   return (
-    <div className="app">
+    <HashRouter>
       <GlobalStyle />
       <IconStyle />
-    </div>
-  );
+      <i className="iconfont">&#xe62b;</i>
+      { renderRoutes(routes) }
+    </HashRouter>
+  )
 }
 
-export default App;
+export default App
