@@ -1,7 +1,7 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import Singers from '../application/Singers'
 import Home from '../application/Home'
+import Singers from '../application/Singers'
 import Recommend from '../application/Recommend'
 import Rank from '../application/Rank'
 

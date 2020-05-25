@@ -10,7 +10,6 @@ function App() {
     <HashRouter>
       <GlobalStyle />
       <IconStyle />
-      <i className="iconfont">&#xe62b;</i>
       { renderRoutes(routes) }
     </HashRouter>
   )
