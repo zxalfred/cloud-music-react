@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import Swiper from 'swiper'
 import { SliderContainer } from './style'
 import 'swiper/css/swiper.css'
@@ -40,6 +41,17 @@ function Slider(props) {
       </div>
     </SliderContainer>
   )
+}
+
+Slider.propTypes = {
+  bannerList: PropTypes.arrayOf(PropTypes.shape({
+    index: PropTypes.number,
+    imageUrl: PropTypes.string,
+  })),
+}
+
+Slider.defaultProps = {
+  bannerList: [],
 }
 
 export default React.memo(Slider)

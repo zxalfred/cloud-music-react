@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { getCount } from '@/api/utils'
 import {
   ListWrapper,
@@ -31,6 +32,19 @@ function RecommendList(props) {
       </List>
     </ListWrapper>
   )
+}
+
+RecommendList.propTypes = {
+  recommendList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    picUrl: PropTypes.string,
+    playCount: PropTypes.number,
+    name: PropTypes.string,
+  })),
+}
+
+RecommendList.defaultProps = {
+  recommendList: [],
 }
 
 export default React.memo(RecommendList)
