@@ -34,7 +34,7 @@ function Home(props) {
           </TabItem>
         </NavLink>
       </Tab>
-      {/* { renderRoutes(route.routes) } */}
+      { renderRoutes(route.routes) }
     </div>
   )
 }
