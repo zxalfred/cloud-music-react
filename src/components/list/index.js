@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { getCount } from '@/api/utils'
+import LazyImage from '@/baseUI/lazyImage'
 import {
   ListWrapper,
   ListItem,
@@ -19,7 +20,7 @@ function RecommendList(props) {
             <ListItem key={item.id}>
               <div className="img_wrapper">
                 <div className="decorate"></div>
-                <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music" />
+                <LazyImage dataSrc={`${item.picUrl}?param=300x300`} src="/music.png" width="100%" height="100%" alt="music" />
                 <div className="play_count">
                   <i className="iconfont play">&#xe885;</i>
                   <span className="count">{getCount(item.playCount)}</span>
