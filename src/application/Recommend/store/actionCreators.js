@@ -11,6 +11,11 @@ export const changeRecommendList = (data) => ({
   data,
 })
 
+export const changeEnterLoading = (data) => ({
+  type: actionTypes.CHANGE_ENTER_LOADING,
+  data,
+})
+
 export const getBannerList = () => async (dispatch) => {
   try {
     const data = await getBannerRequest()
@@ -24,6 +29,7 @@ export const getRecommendList = () => async (dispatch) => {
   try {
     const data = await getRecommendListRequest()
     dispatch(changeRecommendList(data.result))
+    dispatch(changeEnterLoading(false))
   } catch (err) {
     console.log('推荐歌单数据获取错误')
   }

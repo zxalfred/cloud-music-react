@@ -15,6 +15,9 @@ export default (state = defaultState, action) => produce(state, (draft) => {
     case actionTypes.CHANGE_RECOMMEND_LIST:
       draft.recommendList = action.data
       break
+    case actionTypes.CHANGE_ENTER_LOADING:
+      draft.enterLoading = action.data
+      break
     default:
   }
 })
