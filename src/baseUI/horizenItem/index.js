@@ -7,10 +7,11 @@ import style from '@/assets/global-style'
 import styled from 'styled-components'
 
 const List = styled.div`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   height: 30px;
   overflow: hidden;
+  white-space: nowrap;
   > span:first-of-type {
     display: block;
     flex: 0 0 auto;
@@ -37,37 +38,23 @@ function Horizen(props) {
   const {
     list, oldVal, title, handleClick,
   } = props
-  const Category = useRef(null)
-
-  // 初始化内容宽度
-  useEffect(() => {
-    const categoryDOM = Category.current
-    const tagElems = categoryDOM.querySelectorAll('span')
-    let totalWidth = 0
-    Array.from(tagElems).forEach((ele) => {
-      totalWidth += ele.offsetWidth
-    })
-    categoryDOM.style.width = `${totalWidth}px`
-  }, [])
 
   return (
     <Scroll direction="horizental">
-      <div ref={Category}>
-        <List>
-          <span>{title}</span>
-          {
-            list.map((item) => (
-              <ListItem
-                key={item.key}
-                className={`${oldVal === item.key ? 'selected' : ''}`}
-                onClick={() => handleClick(item.key)}
-              >
-                {item.name}
-              </ListItem>
-            ))
-          }
-        </List>
-      </div>
+      <List>
+        <span>{title}</span>
+        {
+          list.map((item) => (
+            <ListItem
+              key={item.key}
+              className={`${oldVal === item.key ? 'selected' : ''}`}
+              onClick={() => handleClick(item.key)}
+            >
+              {item.name}
+            </ListItem>
+          ))
+        }
+      </List>
     </Scroll>
   )
 }
