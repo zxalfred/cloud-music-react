@@ -22,7 +22,7 @@ export default [
         component: Recommend,
       },
       {
-        path: 'singers',
+        path: '/singers',
         component: Singers,
       },
       {
