@@ -1,5 +1,5 @@
 import React, {
-  memo, useRef, useEffect,
+  memo,
 } from 'react'
 import Scroll from '@/baseUI/scroll'
 import PropTypes from 'prop-types'

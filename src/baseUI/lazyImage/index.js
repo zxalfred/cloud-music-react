@@ -9,7 +9,7 @@ if (!document.lazyLoadInstance) {
   })
 }
 
-export class LazyImage extends React.Component {
+class LazyImage extends React.Component {
   // Update lazyLoad after first rendering of every image
   componentDidMount() {
     document.lazyLoadInstance.update()
