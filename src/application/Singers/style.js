@@ -30,6 +30,11 @@ export const List = styled.div`
     color: ${style['font-color-desc']};
     font-size: ${style['font-size-s']};
   }
+  .reach-bottom-tip {
+    color: #ccc;
+    text-align: center;
+    margin: 10px 0;
+  }
 `
 export const ListItem = styled.div`
   box-sizing: border-box;

@@ -29,12 +29,18 @@ export const changePullDownLoading = (data) => ({
   data,
 })
 
+export const changeReachedBottom = (data) => ({
+  type: actionTypes.CHANGE_REACHED_BOTTOM,
+  data,
+})
+
 export const getHotSingerList = () => async (dispatch) => {
   try {
     const res = await getHotSingerListRequest(0)
     dispatch(changeSingerList(res.artists))
     dispatch(changeEnterLoading(false))
     dispatch(changePullDownLoading(false))
+    dispatch(changeReachedBottom(!res.more))
   } catch (err) {
     console.log('热门歌手数据获取失败')
   }
@@ -44,9 +50,11 @@ export const getMoreHotSingerList = () => async (dispatch, getState) => {
   try {
     const state = getState()
     const { pageCount, singerList } = state.singers
+    dispatch(changePullUpLoading(true))
     const res = await getHotSingerListRequest(pageCount)
     dispatch(changeSingerList([...singerList, ...res.artists]))
     dispatch(changePullUpLoading(false))
+    dispatch(changeReachedBottom(!res.more))
   } catch (err) {
     console.log('热门歌手数据获取失败')
   }
@@ -58,6 +66,7 @@ export const getSingerList = (category, alpha) => async (dispatch) => {
     dispatch(changeSingerList(res.artists))
     dispatch(changeEnterLoading(false))
     dispatch(changePullDownLoading(false))
+    dispatch(changeReachedBottom(!res.more))
   } catch (err) {
     console.log('歌手数据获取失败')
   }
@@ -66,9 +75,11 @@ export const getSingerList = (category, alpha) => async (dispatch) => {
 export const getMoreSingerList = (category, alpha) => async (dispatch, getState) => {
   try {
     const { pageCount, singerList } = getState().singers
+    dispatch(changePullUpLoading(true))
     const res = await getSingerListRequest(category, alpha, pageCount)
     dispatch(changeSingerList([...singerList, ...res.artists]))
-    dispatch(changePullDownLoading(false))
+    dispatch(changePullUpLoading(false))
+    dispatch(changeReachedBottom(!res.more))
   } catch (err) {
     console.log('歌手数据获取失败')
   }

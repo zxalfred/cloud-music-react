@@ -31,7 +31,7 @@ function Recommend() {
           <RecommendList recommendList={recommendList} />
         </div>
       </Scroll>
-      {enterLoading ? <Loading /> : null}
+      {enterLoading && <Loading />}
     </Content>
   )
 }
