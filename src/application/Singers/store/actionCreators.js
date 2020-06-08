@@ -40,7 +40,7 @@ export const getHotSingerList = () => async (dispatch) => {
   }
 }
 
-export const refreshMoreHotSingerList = () => async (dispatch, getState) => {
+export const getMoreHotSingerList = () => async (dispatch, getState) => {
   try {
     const state = getState()
     const { pageCount, singerList } = state.singers
@@ -63,7 +63,7 @@ export const getSingerList = (category, alpha) => async (dispatch) => {
   }
 }
 
-export const refreshMoreSingerList = (category, alpha) => async (dispatch, getState) => {
+export const getMoreSingerList = (category, alpha) => async (dispatch, getState) => {
   try {
     const { pageCount, singerList } = getState().singers
     const res = await getSingerListRequest(category, alpha, pageCount)
