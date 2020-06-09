@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { renderRoutes } from 'react-router-config'
 import { NavLink } from 'react-router-dom'
 import {
@@ -37,6 +38,10 @@ function Home(props) {
       { renderRoutes(route.routes) }
     </div>
   )
+}
+
+Home.propTypes = {
+  route: PropTypes.shape({ routes: PropTypes.arrayOf(PropTypes.object) }).isRequired,
 }
 
 export default React.memo(Home)
