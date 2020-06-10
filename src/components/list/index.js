@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { getCount } from '@/api/utils'
 import LazyImage from '@/baseUI/lazyImage'
+import { withRouter } from 'react-router-dom'
 import {
   ListWrapper,
   ListItem,
@@ -9,7 +10,11 @@ import {
 } from './style'
 
 function RecommendList(props) {
-  const { recommendList } = props
+  const { history, recommendList } = props
+
+  const enterDetail = (id) => {
+    history.push(`/recommend/${id}`)
+  }
 
   return (
     <ListWrapper>
@@ -17,7 +22,7 @@ function RecommendList(props) {
       <List>
         {
           recommendList.map((item) => (
-            <ListItem key={item.id}>
+            <ListItem key={item.id} onClick={() => enterDetail(item.id)}>
               <div className="img_wrapper">
                 <div className="decorate"></div>
                 <LazyImage dataSrc={`${item.picUrl}?param=300x300`} src="/music.png" width="100%" height="100%" alt="music" />
@@ -42,10 +47,11 @@ RecommendList.propTypes = {
     playCount: PropTypes.number,
     name: PropTypes.string,
   })),
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
 }
 
 RecommendList.defaultProps = {
   recommendList: [],
 }
 
-export default React.memo(RecommendList)
+export default React.memo(withRouter(RecommendList))

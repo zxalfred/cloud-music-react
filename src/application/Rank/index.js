@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { filterIndex, filterIdx } from '@/api/utils'
+import { filterIndex } from '@/api/utils'
 import Scroll from '@/baseUI/scroll'
 import { renderRoutes } from 'react-router-config'
 import Loading from '@/baseUI/loading'
@@ -13,13 +13,6 @@ import {
   Container,
 } from './style'
 import { EnterLoading } from '../Singers/style'
-
-const enterDetail = (name) => {
-  const idx = filterIdx(name)
-  if (idx === null) {
-    console.log('暂无相关数据')
-  }
-}
 
 const renderSongList = (list) => !!list.length && (
 <SongList>
@@ -33,33 +26,37 @@ const renderSongList = (list) => !!list.length && (
 </SongList>
 )
 
-const renderRankList = (list, global) => (
-  <List globalRank={global}>
-    {
-        list.map((item) => (
-          <ListItem
-            key={item.coverImgId}
-            tracks={item.tracks}
-            onClick={() => enterDetail(item.name)}
-          >
-            <div className="img_wrapper">
-              <img src={item.coverImgUrl} alt="" />
-              <div className="decorate" />
-              <span className="update_frequency">{item.updateFrequency}</span>
-            </div>
-            {renderSongList(item.tracks)}
-          </ListItem>
-        ))
-      }
-  </List>
-)
-
 function Rank(props) {
   const dispatch = useDispatch()
   const rankList = useSelector((store) => store.rank.rankList)
   const loading = useSelector((store) => store.rank.loading)
 
-  const { route } = props
+  const { route, history } = props
+
+  const enterDetail = (detail) => {
+    history.push(`/rank/${detail.id}`)
+  }
+
+  const renderRankList = (list, global) => (
+    <List globalRank={global}>
+      {
+          list.map((item) => (
+            <ListItem
+              key={item.coverImgId}
+              tracks={item.tracks}
+              onClick={() => enterDetail(item)}
+            >
+              <div className="img_wrapper">
+                <img src={item.coverImgUrl} alt="" />
+                <div className="decorate" />
+                <span className="update_frequency">{item.updateFrequency}</span>
+              </div>
+              {renderSongList(item.tracks)}
+            </ListItem>
+          ))
+        }
+    </List>
+  )
 
   useEffect(() => {
     const getRankListData = () => {
@@ -78,9 +75,9 @@ function Rank(props) {
     <Container>
       <Scroll>
         <div>
-          {loading && <h1 className="official">官方榜</h1>}
+          {!loading && <h1 className="official">官方榜</h1>}
           {renderRankList(officialList)}
-          {loading && <h1 className="global">全球榜</h1>}
+          {!loading && <h1 className="global">全球榜</h1>}
           {renderRankList(globalList, true)}
           {loading && <EnterLoading><Loading /></EnterLoading>}
         </div>
@@ -92,6 +89,7 @@ function Rank(props) {
 
 Rank.propTypes = {
   route: PropTypes.shape({ routes: PropTypes.arrayOf(PropTypes.array) }).isRequired,
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
 }
 
 export default React.memo(Rank)
