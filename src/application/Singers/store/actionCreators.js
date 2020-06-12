@@ -15,7 +15,7 @@ export const changePageCount = (data) => ({
 })
 
 export const changeEnterLoading = (data) => ({
-  type: actionTypes.CHANGE_ENTER_LOADIGN,
+  type: actionTypes.CHANGE_ENTER_LOADING,
   data,
 })
 

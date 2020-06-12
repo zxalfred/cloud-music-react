@@ -30,7 +30,7 @@ const defaultState = {
   loading: true,
 }
 
-const reducer = (state = defaultState, action) => produce(state, (draft) => {
+export const reducer = (state = defaultState, action) => produce(state, (draft) => {
   switch (action.type) {
     case CHANGE_RANK_LIST:
       draft.rankList = action.data
@@ -41,5 +41,3 @@ const reducer = (state = defaultState, action) => produce(state, (draft) => {
     default:
   }
 })
-
-export { reducer }

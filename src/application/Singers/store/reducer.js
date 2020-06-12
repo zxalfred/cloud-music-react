@@ -18,7 +18,7 @@ export default (state = defaultState, action) => produce(state, (draft) => {
     case actionTypes.CHANGE_PAGE_COUNT:
       draft.pageCount = action.data
       break
-    case actionTypes.CHANGE_ENTER_LOADIGN:
+    case actionTypes.CHANGE_ENTER_LOADING:
       draft.enterLoading = action.data
       break
     case actionTypes.CHANGE_PULLUP_LOADING:
