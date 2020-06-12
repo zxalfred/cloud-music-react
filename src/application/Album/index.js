@@ -1,5 +1,5 @@
 import React, {
-  useState, useCallback, useRef, useEffect,
+  useState, useCallback, useEffect,
 } from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransition } from 'react-transition-group'
