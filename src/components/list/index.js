@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { getCount } from '@/api/utils'
 import LazyImage from '@/baseUI/lazyImage'
-import { withRouter } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import {
   ListWrapper,
   ListItem,
@@ -10,7 +10,8 @@ import {
 } from './style'
 
 function RecommendList(props) {
-  const { history, recommendList } = props
+  const { recommendList } = props
+  const history = useHistory()
 
   const enterDetail = (id) => {
     history.push(`/recommend/${id}`)
@@ -54,4 +55,4 @@ RecommendList.defaultProps = {
   recommendList: [],
 }
 
-export default React.memo(withRouter(RecommendList))
+export default React.memo(RecommendList)

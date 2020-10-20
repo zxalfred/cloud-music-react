@@ -1,7 +1,10 @@
 import React, {
   memo, useState, useCallback,
 } from 'react'
+import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { renderRoutes } from 'react-router-config'
 import Horizen from '@/baseUI/horizenItem'
 import { categoryTypes, alphaTypes } from '@/api/config'
 import Scroll from '@/baseUI/scroll'
@@ -13,27 +16,11 @@ import { actionCreators } from './store'
 import useSingerListData from './hooks/useSingerListData'
 import Loading from '../../baseUI/loading'
 
-const renderSingerList = (singerList, reachedBottom) => (
-  <List>
-    {
-      singerList.map((item) => (
-        <ListItem key={item.id}>
-          <div className="img-wrapper">
-            <LazyImage dataSrc={`${item.picUrl}?param=300x300`} src="/music.png" width="100%" height="100%" alt="music" />
-          </div>
-          <span className="nam">{item.name}</span>
-        </ListItem>
-      ))
-    }
-    {reachedBottom && <div className="reach-bottom-tip">到底啦！</div>}
-  </List>
-)
-
-
-function Singers() {
+function Singers(props) {
   const [category, setCategory] = useState('')
   const [alpha, setAlpha] = useState('')
 
+  const history = useHistory()
   const dispatch = useDispatch()
   const [
     singerList,
@@ -93,6 +80,30 @@ function Singers() {
     pullDownRefresh(category, alpha)
   }, [category, alpha])
 
+  const renderSingerList = (singerList, reachedBottom) => {
+    const enterDetail = useCallback((id) => {
+      history.push(`/singers/${id}`)
+    })
+
+    return (
+      <List>
+        {
+        singerList.map((item, index) => (
+          <ListItem key={`${item.id}${index}`} onClick={() => enterDetail(item.id)}>
+            <div className="img-wrapper">
+              <LazyImage dataSrc={`${item.picUrl}?param=300x300`} src="/music.png" width="100%" height="100%" alt="music" />
+            </div>
+            <span className="nam">{item.name}</span>
+          </ListItem>
+        ))
+      }
+        {reachedBottom && <div className="reach-bottom-tip">到底啦！</div>}
+      </List>
+    )
+  }
+
+  const { route: { routes } } = props
+
   return (
     <div>
       <NavContainer>
@@ -120,8 +131,13 @@ function Singers() {
         </Scroll>
         {enterLoading && <Loading />}
       </ListContainer>
+      { renderRoutes(routes) }
     </div>
   )
+}
+
+Singers.propTypes = {
+  route: PropTypes.shape({ routes: PropTypes.arrayOf(PropTypes.object) }).isRequired,
 }
 
 export default memo(Singers)
