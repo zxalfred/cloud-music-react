@@ -1,5 +1,5 @@
 import React, {
-  useState, useCallback, useEffect,
+  useState, useCallback, useEffect, useRef,
 } from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransition } from 'react-transition-group'
@@ -8,6 +8,7 @@ import Scroll from '@/baseUI/scroll'
 import { getName, getCount, isEmptyObject } from '@/api/utils'
 import { useDispatch, useSelector } from 'react-redux'
 import Loading from '@/baseUI/loading'
+import style from '@/assets/global-style'
 import {
   Container,
   TopDesc,
@@ -26,6 +27,10 @@ function Album(props) {
   const currentAlbum = useSelector((state) => state.album.currentAlbum)
   const enterLoading = useSelector((state) => state.album.enterLoading)
   const [showStatus, setShowStatus] = useState(true)
+  const [title, setTitle] = useState('歌单')
+  const [isMarquee, setIsMarquee] = useState(false)
+
+  const headerRef = useRef()
 
   useEffect(() => {
     const getAlbumData = () => {
@@ -101,6 +106,23 @@ function Album(props) {
     </SongList>
   )
 
+  const handleScroll = useCallback((pos) => {
+    const minScrollY = -45
+    const percent = Math.abs(pos.y / minScrollY)
+    const headerDom = headerRef.current
+    if (pos.y < minScrollY) {
+      headerDom.style.backgroundColor = style['theme-color']
+      headerDom.style.opacity = Math.min(1, (percent - 1) / 2)
+      setTitle(currentAlbum.name)
+      setIsMarquee(true)
+    } else {
+      headerDom.style.backgroundColor = ''
+      headerDom.style.opacity = 1
+      setTitle('歌单')
+      setIsMarquee(false)
+    }
+  }, [headerRef])
+
   return (
     <CSSTransition
       in={showStatus}
@@ -112,14 +134,16 @@ function Album(props) {
     >
       <Container>
         <Header
-          title="返回"
+          title={title}
           handleClick={handleBack}
+          ref={headerRef}
+          isMarquee={isMarquee}
         />
         { enterLoading && <Loading /> }
         {
           !isEmptyObject(currentAlbum)
           && (
-            <Scroll bounceTop={false}>
+            <Scroll bounceTop={false} onScroll={handleScroll}>
               <div>
                 {renderTopDesc()}
                 {renderMenu()}
