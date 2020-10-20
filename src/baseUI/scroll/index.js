@@ -54,6 +54,7 @@ const Scroll = forwardRef((props, ref) => {
       scrollY: direction === 'vertical',
       probeType: 3,
       click,
+      mouseWheel: true,
       bounce: {
         top: bounceTop,
         bottom: bounceBottom,

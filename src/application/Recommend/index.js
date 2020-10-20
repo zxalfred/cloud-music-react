@@ -9,7 +9,6 @@ import { renderRoutes } from 'react-router-config'
 import { actionCreators } from './store'
 import { Content } from './style'
 
-
 function Recommend(props) {
   const bannerList = useSelector((state) => state.recommend.bannerList)
   const recommendList = useSelector((state) => state.recommend.recommendList)
