@@ -1,13 +1,13 @@
 import React, {
   memo, useState, useCallback,
 } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import Horizen from '@/baseUI/horizenItem'
 import { categoryTypes, alphaTypes } from '@/api/config'
 import Scroll from '@/baseUI/scroll'
 import LazyImage from '@/baseUI/lazyImage'
 import {
-  NavContainer, ListContainer, List, ListItem, ReachBottomTip,
+  NavContainer, ListContainer, List, ListItem,
 } from './style'
 import { actionCreators } from './store'
 import useSingerListData from './hooks/useSingerListData'
@@ -35,21 +35,23 @@ function Singers() {
   const [alpha, setAlpha] = useState('')
 
   const dispatch = useDispatch()
-  const singerList = useSingerListData()
-  const enterLoading = useSelector((state) => state.singers.enterLoading)
-  const pullUpLoading = useSelector((state) => state.singers.pullUpLoading)
-  const pullDownLoading = useSelector((state) => state.singers.pullDownLoading)
-  const pageCount = useSelector((state) => state.singers.pageCount)
-  const reachedBottom = useSelector((state) => state.singers.reachedBottom)
+  const [
+    singerList,
+    enterLoading,
+    pullUpLoading,
+    pullDownLoading,
+    pageCount,
+    reachedBottom,
+  ] = useSingerListData()
 
   // 筛选歌手列表
-  const getSingerList = (category, alpha) => {
+  const getSingerList = useCallback((category, alpha) => {
     dispatch(actionCreators.changePageCount(0))
     dispatch(actionCreators.changeEnterLoading(true))
     dispatch(actionCreators.getSingerList(category, alpha))
-  }
+  })
   // 滑动到底部
-  const pullUpRefresh = (category, alpha, count) => {
+  const pullUpRefresh = useCallback((category, alpha, count) => {
     if (reachedBottom) return
     dispatch(actionCreators.changePageCount(count + 50))
     if (category === '' && alpha === '') {
@@ -57,9 +59,9 @@ function Singers() {
     } else {
       dispatch(actionCreators.getMoreSingerList(category, alpha))
     }
-  }
+  }, [reachedBottom])
   // 下拉刷新
-  const pullDownRefresh = (category, alpha) => {
+  const pullDownRefresh = useCallback((category, alpha) => {
     dispatch(actionCreators.changePullDownLoading(true))
     dispatch(actionCreators.changePageCount(0))
     if (category === '' && alpha === '') {
@@ -67,7 +69,7 @@ function Singers() {
     } else {
       dispatch(actionCreators.getSingerList(category, alpha))
     }
-  }
+  })
 
   const handleUpdateCategory = useCallback((val) => {
     let newVal = val
@@ -83,13 +85,13 @@ function Singers() {
     getSingerList(category, newVal)
   })
 
-  const handlePullUp = () => {
+  const handlePullUp = useCallback(() => {
     pullUpRefresh(category, alpha, pageCount)
-  }
+  }, [category, alpha, pageCount])
 
-  const handlePullDown = () => {
+  const handlePullDown = useCallback(() => {
     pullDownRefresh(category, alpha)
-  }
+  }, [category, alpha])
 
   return (
     <div>
