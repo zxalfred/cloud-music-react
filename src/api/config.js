@@ -210,9 +210,13 @@ const RankTypes = {
   23: '江小白YOLO云音乐说唱榜',
 }
 
+// 顶部的高度
+const HEADER_HEIGHT = 45
+
 export {
   axiosInstance,
   categoryTypes,
   alphaTypes,
   RankTypes,
+  HEADER_HEIGHT,
 }
