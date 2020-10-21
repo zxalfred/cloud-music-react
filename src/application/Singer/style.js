@@ -34,7 +34,7 @@ export const ImgWrapper = styled.div`
   height: 0;
   padding-top: 75%;
   transform-origin: top;
-  background: url('${(props) => props.bgUrl}') center/cover;
+  background: url('${(props) => props.bgUrl}') 0 0/cover;
   z-index: 50;
   .filter {
     position: absolute;

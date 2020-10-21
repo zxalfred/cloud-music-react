@@ -6,6 +6,8 @@ import { CSSTransition } from 'react-transition-group'
 import Header from '@/baseUI/header'
 import Scroll from '@/baseUI/scroll'
 import { HEADER_HEIGHT } from '@/api/config'
+import Loading from '@/baseUI/loading'
+import useSingerInfo from './hooks/useSingerInfo'
 import {
   Container, ImgWrapper, CollectButton, SongListWrapper, BgLayer,
 } from './style'
@@ -22,152 +24,7 @@ function Singer() {
     setShowStatus(false)
   }, [])
 
-  const artist = {
-    picUrl: 'https://p2.music.126.net/W__FCWFiyq0JdPtuLJoZVQ==/109951163765026271.jpg',
-    name: '薛之谦',
-    hotSongs: [
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-      {
-        name: '我好像在哪见过你',
-        ar: [{ name: '薛之谦' }],
-        al: {
-          name: '薛之谦专辑',
-        },
-      },
-    ],
-  }
+  const [artist, songs, loading] = useSingerInfo()
 
   const collectButton = useRef()
   const imageWrapper = useRef()
@@ -252,11 +109,12 @@ function Singer() {
         <SongListWrapper ref={songScrollWrapper}>
           <Scroll ref={songScroll} onScroll={handleScroll}>
             <SongsList
-              songs={artist.hotSongs}
+              songs={songs}
               showCollect={false}
             />
           </Scroll>
         </SongListWrapper>
+        { loading && <Loading />}
       </Container>
     </CSSTransition>
   )
