@@ -7,6 +7,7 @@ import {
   Tab,
   TabItem,
 } from './style'
+import Player from '../Player'
 
 function Home(props) {
   const { route } = props
@@ -36,6 +37,7 @@ function Home(props) {
         </NavLink>
       </Tab>
       { renderRoutes(route.routes) }
+      <Player />
     </div>
   )
 }

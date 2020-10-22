@@ -213,10 +213,17 @@ const RankTypes = {
 // 顶部的高度
 const HEADER_HEIGHT = 45
 
+const playMode = {
+  sequence: 0,
+  loop: 1,
+  random: 2,
+}
+
 export {
   axiosInstance,
   categoryTypes,
   alphaTypes,
   RankTypes,
   HEADER_HEIGHT,
+  playMode,
 }
